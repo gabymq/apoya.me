@@ -1,6 +1,6 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var User = sequelize.define('user', {
+  var user = sequelize.define('user', {
     id: {
         	allowNull: false,
         	defaultValue: DataTypes.UUIDV4,
@@ -17,9 +17,9 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        // associations can be defined here
+      	user.hasMany(models.project,{foreignKey: "user_id"});
       }
     }
   });
-  return User;
+  return user;
 };
