@@ -23,24 +23,8 @@ var project = (function(){
 		});
 	};
 
-	/*user.prototype.find = function(id, callback){
-		var oneOrAll;
-		var where;
-
-		if(id){
-			oneOrAll = "findOne";
-			where = {
-				where: {
-					id: id
-				}
-			};
-		} else {
-			oneOrAll = "findAndCountAll";
-			where = {};
-		}
-
-
-		Models.user[oneOrAll](where)
+	project.prototype.findOne = function(id, callback){
+		Models.project.findById(id)
 		.then(function(data){
 			return callback({
 				error: false,
@@ -55,33 +39,30 @@ var project = (function(){
 		});
 	};
 
-	user.prototype.edit = function(id, project, callback){
-		Models.user.findById(id)
+	project.prototype.edit = function(id, project, callback){
+		Models.project.findById(id)
 		.then(function(data){
 			return data;
 		})
 		.then(function(oldData){
 
-			if(user.email){
-				oldData.email = user.email;
+			if( project.name ){
+				oldData.name = project.name;
 			}
-			if(user.password){
-				oldData.password = user.password;
+			if( project.category ){
+				oldData.category = project.category;
 			}
-			if(user.role){
-				oldData.role = user.role;
+			if( project.approved ){
+				oldData.approved = project.approved;
 			}
-			if(user.rank){
-				oldData.rank = user.rank;
+			if( project.start_date ){
+				oldData.start_date = project.start_date;
 			}
-			if(user.info){
-				oldData.info = user.info;
+			if( project.due_date ){
+				oldData.due_date = project.due_date;
 			}
-			if(user.page){
-				oldData.page = user.page;
-			}
-			if(user.image){
-				oldData.image = user.image;
+			if( project.html ){
+				oldData.html = project.html;
 			}
 
 			return oldData.save()
@@ -100,8 +81,8 @@ var project = (function(){
 		});
 	};
 
-	user.prototype.delete = function(id,callback){
-		Models.user.findById(id)
+	project.prototype.delete = function(id,callback){
+		Models.project.findById(id)
 		.then(function(data){
 			return data.destroy();
 		})
@@ -117,25 +98,11 @@ var project = (function(){
 				msg: err,
 			});
 		});
-	}*/
+	}
+
 
 	return project;
 })();
 
 
-//module.exports = project;
-
-var some = new project();
-
-some.create({
-	name: "Proyecto de Prueba",
-	category: "cat1",
-	approved: false,
-	start_date: Date.now(),
-	due_date: Date.now(),
-	html: "no hay html",
-	user_id: '21e58962-f85a-4a77-9806-1c23a7920d5d',
-},
-function(data){
-	console.log(data.error);
-});
+module.exports = project;
