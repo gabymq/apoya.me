@@ -40,4 +40,4 @@ jspm_packages
 config/db.json
 
 # ignore mysql workbench backup file
-docs/*.mwb.back
+docs/ER.mwb.bak
