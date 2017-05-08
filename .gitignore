@@ -38,3 +38,6 @@ jspm_packages
 
 # ignore db config
 config/db.json
+
+# ignore mysql workbench backup file
+docs/*.mwb.back
