@@ -1,7 +1,9 @@
 {
   "name": "apoya.me",
   "version": "0.0.1",
+  "main": "bin/www",
   "scripts": {
+    "preinstall": "cp -nv config/db.example config/db.json",
     "start": "node ./bin/www"
   },
   "dependencies": {
