@@ -14,6 +14,16 @@ router
 		return res.status(status).json(response.msg);
 	});
 })
+.get("/:id?/projects",function(req,res,next){
+	var ctrl = new usrCtrlr();
+	var id = (req.params.id) ? req.params.id : null;
+
+	ctrl.findProjects(id,function(response){
+		var status = response.error ? 500 : 200;
+
+		return res.status(status).json(response.msg);
+	});
+})
 .post("/",function(req,res,next){
 	var ctrl = new usrCtrlr();
 	var user = req.body;

@@ -55,6 +55,36 @@ var user = (function(){
 		});
 	};
 
+	user.prototype.findProjects = function(id, callback){
+		var oneOrAll;
+		var where = {
+			plain:true,
+			where: {
+				id: id
+			},
+			include: [{
+				model: Models.project,
+				where: {
+					user_id: id
+				},
+			}]
+		};
+
+		Models.user.findAll(where)
+		.then(function(data){
+			return callback({
+				error: false,
+				msg:data,
+			});
+		})
+		.catch(function(err){
+			return callback({
+				error: true,
+				msg: err,
+			});
+		});
+	};
+
 	user.prototype.edit = function(id, user, callback){
 		Models.user.findById(id)
 		.then(function(data){
