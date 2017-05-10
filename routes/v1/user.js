@@ -14,7 +14,7 @@ router
 		return res.status(status).json(response.msg);
 	});
 })
-.get("/:id?/projects",function(req,res,next){
+.get("/:id/projects",function(req,res,next){
 	var ctrl = new usrCtrlr();
 	var id = (req.params.id) ? req.params.id : null;
 
