@@ -1,50 +1,105 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+"use strict";
 
-var index = require('./routes/index');
-var user = require('./routes/v1/user');
-var project = require('./routes/v1/project');
-var image = require('./routes/v1/image');
+const favicon		= sys.require('serve-favicon');
+const logger		= sys.require('morgan');
+const cookieParser	= sys.require('cookie-parser');
+const bodyParser	= sys.require('body-parser');
 
-var app = express();
+// Create and config a new ExpressJs web Application
+const Application = (function(){
+	function Application(){
+		this.express = sys.express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+		return this.constructor();
+	}
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+	Application.prototype.constructor = function() {
+		this.middleware();
+		this.viewsConfig();
+		this.exposePubicPath();
+		this.exposeRoutes();
+		this.catch404();
+	};
 
-app.use('/', index);
-app.use('/user', user);
-app.use('/project', project);
-app.use('/image', image);
+	Application.prototype.middleware = function(){
+		// this.express.use( favicon( sys.path.join( sys.dir.public, 'favicon.ico') ) );
+		this.express.use(logger('dev'));
+		this.express.use( bodyParser.json() );
+		this.express.use( bodyParser.urlencoded({ extended: true }) );
+		// this.express.use( cookieParser() );
+	};
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+	Application.prototype.viewsConfig = function(){
+		// view engine setup
+		this.express.set('views', sys.dir.views);
+		this.express.set('view engine', 'pug');
+	};
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+	Application.prototype.exposePubicPath = function(){
+		this.express.use( sys.express.static( sys.dir.public ) );
+	};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+	Application.prototype.getRoutes = function(){
+		const routesConfig = sys.getConfig('/routes');
+		let res = {};
 
-module.exports = app;
+		for(let key in routesConfig ){
+			// find the router en routes dir then load it
+			let routerFilePath = sys.path.join( sys.dir.routes ,  routesConfig[key] );
+			let router = ( sys.fileExists( routerFilePath + '.js') ) ? sys.require( routerFilePath ) : false;
+
+			// translate key as public style string for route
+			let resKey = '/';
+			resKey += ( key == 'default' ) ? '' : key;
+
+			// store it in Response Object
+			res[ resKey ] = {
+				name: key,
+				path: routesConfig[key],
+				router: router,
+			};
+		}
+
+		return res;
+	};
+
+	Application.prototype.exposeRoutes = function(){
+		const loadedRouters = this.getRoutes();
+
+		for( let key in loadedRouters ){
+			if( sys.env.env === 'development' ){
+				if( loadedRouters[key].router )
+				console.log('exposing router: "'+loadedRouters[key].path+'" as: "'+key+'"');
+			}
+
+			if( !loadedRouters[key].router ){
+				console.error(' WARNING: The router named: "'+loadedRouters[key].name+'" does not exist in the path "'+loadedRouters[key].path+'" please check the file "/config/routes.js"');
+			} else {
+				this.express.use( key , loadedRouters[key].router );
+			}
+		}
+	};
+
+	Application.prototype.catch404 = function(){
+		// catch 404 and handle it
+		this.express.use(function(req, res, next) {
+			const err = new Error('Not Found');
+			err.status = 404;
+
+			// set locals, only providing error in development
+			res.locals.message = err.message;
+			res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+			// render the error page
+			res.status(err.status || 500);
+			res.render('error');
+		});
+	};
+
+	return Application;
+})();
+
+
+const App = new Application();
+
+module.exports = App.express;

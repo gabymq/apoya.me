@@ -1,26 +1,49 @@
 {
   "name": "apoya.me",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "description": "This project is a crowdfounding plattaform in node, express, sequelize, socket.io, in order to increase the gabymq skills.",
   "main": "bin/www",
   "scripts": {
-    "preinstall": "cp -nv config/db.example config/db.json",
-    "start": "node ./bin/www"
+    "start": "clear && node ./bin/www",
+    "dev": "clear && nodemon ./bin/www",
+    "prod": "forever start ./bin/www",
+    "preinstall": "cp -nv config/db.example config/db.json && cp -nv config/env.example config/env.json",
+    "postinstall": "bower install"
   },
+  "engines": {
+    "node": "6.10.1",
+    "npm": "3.10.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabymq/apoya.me"
+  },
+  "author": "gabymq <gabymq@gmail.com>",
+  "contributors": [{
+    "name": "Hugo Virgen",
+    "email": "virgenherrera@gmail.com"
+  }],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gabymq/apoya.me/issues"
+  },
+  "homepage": "https://github.com/gabymq/apoya.me#readme",
   "dependencies": {
     "body-parser": "~1.16.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.0",
     "express": "~4.14.1",
-    "forever": "^0.15.3",
     "jsonwebtoken": "^7.3.0",
     "morgan": "~1.7.0",
     "mysql": "^2.13.0",
     "pug": "~2.0.0-beta10",
     "sequelize": "^3.30.2",
-    "serve-favicon": "~2.3.2"
+    "serve-favicon": "~2.3.2",
+    "socket.io": "^1.7.3"
   },
   "devDependencies": {
+    "forever": "^0.15.3",
     "nodemon": "^1.11.0",
-    "sequelize-cli": "^2.6.0"
+    "sequelize-cli": "^2.7.0"
   }
 }

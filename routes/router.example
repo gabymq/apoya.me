@@ -1,0 +1,39 @@
+"use strict";
+// const ControllerModule = sys.require("/pathToControllerModule");
+
+/* NAME Router Class */
+const routerNAME = (function(){
+	function routerNAME(){
+		// the router itself to export
+		this.router = sys.express.Router();
+
+		return this.constructor();
+	}
+
+	routerNAME.prototype.constructor = function(){
+		this.router.get("/uriStringHere",this.getNAME);
+		this.router.post("/uriStringHere",this.postNAME);
+		this.router.put("/uriStringHere",this.putNAME);
+		this.router.delete("/uriStringHere",this.deleteNAME);
+	};
+
+	routerNAME.prototype.getNAME = function(req,res,next){
+		// body...
+	};
+
+	routerNAME.prototype.postNAME = function(req,res,next){
+		// body...
+	};
+	routerNAME.prototype.putNAME = function(req,res,next){
+		// body...
+	};
+
+	routerNAME.prototype.deleteNAME = function(req,res,next){
+		// body...
+	};
+
+	return routerNAME;
+})();
+
+
+module.exports = new routerNAME().router;

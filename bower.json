@@ -1,0 +1,24 @@
+{
+  "name": "apoya.me",
+  "description": "This project is a crowdfounding plattaform in node, express, sequelize, socket.io, in order to increase the gabymq skills.",
+  "main": "bin/www",
+  "authors": [
+    "Hugo Virgen <virgenherrera@gmail.com>",
+    "gabymq <gabymq@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/gabymq/apoya.me#readme",
+  "private": true,
+   "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "sweetalert": "1.1.3",
+    "socket.io-client": "1.7.2"
+  }
+}
