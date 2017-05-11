@@ -1,156 +1,174 @@
-'use strict';
-var Models = require("../models");
+"use strict";
+const Models = sys.require("/models");
 
-
-var user = (function(){
-	function user(){
-
+/* User Controller Class */
+const controllerUser = (function(){
+	function controllerUser(plain){
+		// for plain behavior os sequelize response
+		this.plain = (plain);
 	}
 
-	user.prototype.create = function(user,callback){
-		Models.user.create(user)
-		.then(function(data){
-			return callback({
-				error: false,
-				msg: data
-			});
-		})
-		.catch(function(err){
-			return callback({
-				error: true,
-				msg: err,
+	controllerUser.prototype.createAction = function(user){
+		return new Promise((Res,Rej)=>{
+
+			user.plain = true;
+			return Models.user.create(user)
+			.then((data)=>{
+				return Res({
+					error: false,
+					msg: data
+				});
+			})
+			.catch((err)=>{
+				return Rej({
+					error: true,
+					msg: err,
+				});
 			});
 		});
 	};
 
-	user.prototype.find = function(id, callback){
-		var oneOrAll;
-		var where;
+	controllerUser.prototype.findAction = function(id){
+		return new Promise((Res,Rej)=>{
+			let oneOrAll;
+			let where;
 
-		if(id){
-			oneOrAll = "findOne";
-			where = {
+			if(id){
+				oneOrAll = "findOne";
+				where = {
+					where: {
+						id: id
+					}
+				};
+			} else {
+				oneOrAll = "findAndCountAll";
+				where = {};
+			}
+
+			where.plain = this.plain;
+
+			return Models.user[oneOrAll](where)
+			.then((data)=>{
+				return Res({
+					error: false,
+					msg:data,
+				});
+			})
+			.catch((err)=>{
+				return Rej({
+					error: true,
+					msg: err,
+				});
+			});
+		});
+	};
+
+	controllerUser.prototype.findProjectsAction = function(id){
+		return new Promise((Res,Rej)=>{
+			let oneOrAll;
+			let where = {
+				plain:this.plain,
 				where: {
 					id: id
-				}
-			};
-		} else {
-			oneOrAll = "findAndCountAll";
-			where = {};
-		}
-
-
-		Models.user[oneOrAll](where)
-		.then(function(data){
-			return callback({
-				error: false,
-				msg:data,
-			});
-		})
-		.catch(function(err){
-			return callback({
-				error: true,
-				msg: err,
-			});
-		});
-	};
-
-	user.prototype.findProjects = function(id, callback){
-		var oneOrAll;
-		var where = {
-			plain:true,
-			where: {
-				id: id
-			},
-			include: [{
-				model: Models.project,
-				where: {
-					user_id: id
 				},
-			}]
-		};
+				include: [{
+					model: Models.project,
+					where: {
+						user_id: id
+					},
+				}]
+			};
 
-		Models.user.findAll(where)
-		.then(function(data){
-			return callback({
-				error: false,
-				msg:data,
-			});
-		})
-		.catch(function(err){
-			return callback({
-				error: true,
-				msg: err,
-			});
-		});
-	};
-
-	user.prototype.edit = function(id, user, callback){
-		Models.user.findById(id)
-		.then(function(data){
-			return data;
-		})
-		.then(function(oldData){
-
-			if(user.email){
-				oldData.email = user.email;
-			}
-			if(user.password){
-				oldData.password = user.password;
-			}
-			if(user.role){
-				oldData.role = user.role;
-			}
-			if(user.rank){
-				oldData.rank = user.rank;
-			}
-			if(user.info){
-				oldData.info = user.info;
-			}
-			if(user.page){
-				oldData.page = user.page;
-			}
-			if(user.image){
-				oldData.image = user.image;
-			}
-
-			return oldData.save()
-		})
-		.then(function(newData){
-			return callback({
-				error: false,
-				msg: newData,
-			});
-		})
-		.catch(function(err){
-			return callback({
-				error: true,
-				msg: err,
+			where.plain = true;
+			return Models.user.findAll(where)
+			.then((data)=>{
+				return Res({
+					error: false,
+					msg:data,
+				});
+			})
+			.catch((err)=>{
+				return Rej({
+					error: true,
+					msg: err,
+				});
 			});
 		});
 	};
 
-	user.prototype.delete = function(id,callback){
-		Models.user.findById(id)
-		.then(function(data){
-			return data.destroy();
-		})
-		.then(function(){
-			return callback({
-				error: false,
-				msg: "object deleted",
+	controllerUser.prototype.editAction = function(id, user){
+		return new Promise((Res,Rej)=>{
+			return Models.user.findById(id)
+			.then((data)=>{
+				return data;
+			})
+			.then((oldData)=>{
+
+				if(user.email){
+					oldData.email = user.email;
+				}
+				if(user.password){
+					oldData.password = user.password;
+				}
+				if(user.role){
+					oldData.role = user.role;
+				}
+				if(user.rank){
+					oldData.rank = user.rank;
+				}
+				if(user.info){
+					oldData.info = user.info;
+				}
+				if(user.page){
+					oldData.page = user.page;
+				}
+				if(user.image){
+					oldData.image = user.image;
+				}
+
+				oldData.plain = true;
+				return oldData.save()
+			})
+			.then((newData)=>{
+				return Res({
+					error: false,
+					msg: newData,
+				});
+			})
+			.catch((err)=>{
+				return Rej({
+					error: true,
+					msg: err,
+				});
 			});
-		})
-		.catch(function(err){
-			return callback({
-				error: true,
-				msg: err,
+		});
+	};
+
+	controllerUser.prototype.deleteAction = function(id){
+		return new Promise((Res,Rej)=>{
+			return Models.user.findById(id)
+			.then((data)=>{
+
+				data.plain = true;
+				return data.destroy();
+			})
+			.then(()=>{
+				return Res({
+					error: false,
+					msg: "object deleted",
+				});
+			})
+			.catch((err)=>{
+				return Rej({
+					error: true,
+					msg: err,
+				});
 			});
 		});
 	}
 
-	return user;
+	return controllerUser;
 })();
 
 
-module.exports = user;
+module.exports = controllerUser;

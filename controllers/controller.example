@@ -1,0 +1,67 @@
+"use strict";
+// const Models = sys.require("/models");
+
+/* NAME Controller Class */
+const controllerNAME = (function(){
+	function controllerNAME(plain){
+		// for plain behavior os sequelize response
+		this.plain = (plain);
+	}
+
+	/* Example Method
+	controllerProject.prototype.createAction = function(project){
+		return new Promise((Resolve,Reject)=>{
+
+			project.plain = this.plain;
+			return Models.modelName.sequelizeMethod(project)
+			.then((data)=>{
+				return Resolve({
+					error: false,
+					msg: data
+				});
+			})
+			.catch((err)=>{
+				return Reject({
+					error: true,
+					msg: err,
+				});
+			});
+		});
+	};
+	*/
+
+	controllerNAME.prototype.createAction = function(NAME){
+		return new Promise((Res,Rej)=>{
+			// body...
+		});
+	};
+
+	controllerNAME.prototype.findAction = function(id){
+		return new Promise((Res,Rej)=>{
+			// body...
+		});
+	};
+
+	controllerNAME.prototype.findProjectsAction = function(id){
+		return new Promise((Res,Rej)=>{
+			// body...
+		});
+	};
+
+	controllerNAME.prototype.editAction = function(id, NAME){
+		return new Promise((Res,Rej)=>{
+			// body...
+		});
+	};
+
+	controllerNAME.prototype.deleteAction = function(id){
+		return new Promise((Res,Rej)=>{
+			// body...
+		});
+	}
+
+	return controllerNAME;
+})();
+
+
+module.exports = controllerNAME;
