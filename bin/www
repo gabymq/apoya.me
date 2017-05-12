@@ -7,7 +7,7 @@
  */
 require('../lib/systemTools');
 const app = require('../app');
-const debug = require('debug')('apoya.me:server');
+const debug = require('debug')(sys.env.name+':server');
 const http = require('http');
 
 /**
@@ -91,6 +91,6 @@ function onListening() {
 	const msg = sys.env.name+' is Listening on port: '+bind;
 
 	debug(msg);
-	console.log(msg);
-	console.log('check it at: '+sys.getProjectUrl());
+	console.log("\n"+msg);
+	console.log('whatch it in: '+sys.getProjectUrl()+"\n");
 }

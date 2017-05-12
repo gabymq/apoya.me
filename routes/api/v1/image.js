@@ -23,9 +23,10 @@ const routerImage = (function(){
 
 		return ctrl.createAction(id)
 		.then((response)=>{
-			let status = response.error ? 500 : 200;
-
-			return res.status(status).json(response.msg);
+			return res.status(200).json(response.msg);
+		})
+		.catch((err)=>{
+			return res.status(500).json(err.msg);
 		});
 	};
 
@@ -35,9 +36,10 @@ const routerImage = (function(){
 
 		return ctrl.findOneAction(image)
 		.then((response)=>{
-			let status = response.error ? 500 : 201;
-
-			return res.status(status).json(response.msg);
+			return res.status(201).json(response.msg);
+		})
+		.catch((err)=>{
+			return res.status(500).json(err.msg);
 		});
 	};
 
@@ -48,10 +50,10 @@ const routerImage = (function(){
 
 		return ctrl.editAction(id,image)
 		.then((response)=>{
-			let status = response.error ? 500 : 200;
-
-
-			return res.status(status).json(response.msg);
+			return res.status(200).json(response.msg);
+		})
+		.catch((err)=>{
+			return res.status(500).json(err.msg);
 		});
 	};
 
@@ -61,9 +63,10 @@ const routerImage = (function(){
 
 		return ctrl.deleteAction(id)
 		.then((response)=>{
-			let status = response.error ? 500 : 200;
-
-			return res.status(status).json(response.msg);
+			return res.status(200).json(response.msg);
+		})
+		.catch((err)=>{
+			return res.status(500).json(err.msg);
 		});
 	};
 

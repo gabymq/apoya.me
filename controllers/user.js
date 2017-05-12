@@ -15,7 +15,7 @@ const controllerUser = (function(){
 			return Models.user.create(user)
 			.then((data)=>{
 				return Res({
-					error: false,
+					error: this.plain,
 					msg: data
 				});
 			})

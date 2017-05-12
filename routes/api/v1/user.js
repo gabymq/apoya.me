@@ -24,9 +24,10 @@ const userRouter = (function(){
 
 		return ctrl.findAction(id)
 		.then((response)=>{
-			let status = response.error ? 500 : 200;
-
-			return res.status(status).json(response.msg);
+			return res.status(200).json(response.msg);
+		})
+		.catch((err)=>{
+			return res.status(500).json(err.msg);
 		});
 	};
 
@@ -36,9 +37,10 @@ const userRouter = (function(){
 
 		return ctrl.findProjectsAction(id)
 		.then((response)=>{
-			let status = response.error ? 500 : 200;
-
-			return res.status(status).json(response.msg);
+			return res.status(200).json(response.msg);
+		})
+		.catch((err)=>{
+			return res.status(500).json(err.msg);
 		});
 	};
 
@@ -48,9 +50,10 @@ const userRouter = (function(){
 
 		return ctrl.createAction(user)
 		.then((response)=>{
-			let status = response.error ? 500 : 201;
-
-			return res.status(status).json(response.msg);
+			return res.status(201).json(response.msg);
+		})
+		.catch((err)=>{
+			return res.status(500).json(err.msg);
 		});
 	};
 
@@ -61,9 +64,10 @@ const userRouter = (function(){
 
 		return ctrl.editAction(id,user)
 		.then((response)=>{
-			let status = response.error ? 500 : 200;
-
-			return res.status(status).json(response.msg);
+			return res.status(500).json(response.msg);
+		})
+		.catch((err)=>{
+			return res.status(200).json(err.msg);
 		});
 	};
 
@@ -73,9 +77,10 @@ const userRouter = (function(){
 
 		return ctrl.deleteAction(id)
 		.then((response)=>{
-			let status = response.error ? 500 : 200;
-
-			return res.status(status).json(response.msg);
+			return res.status(500).json(response.msg);
+		})
+		.catch((err)=>{
+			return res.status(200).json(err.msg);
 		});
 	};
 

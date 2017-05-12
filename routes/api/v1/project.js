@@ -23,9 +23,10 @@ const projectRouter = (function(){
 
 		return ctrl.findOneAction(id)
 		.then((response)=>{
-			let status = response.error ? 500 : 200;
-
-			return res.status(status).json(response.msg);
+			return res.status(200).json(response.msg);
+		})
+		.catch((err)=>{
+			return res.status(500).json(err.msg);
 		});
 	};
 	projectRouter.prototype.postProject = function(req,res,next){
@@ -34,9 +35,10 @@ const projectRouter = (function(){
 
 		return ctrl.createAction(project)
 		.then((response)=>{
-			let status = response.error ? 500 : 201;
-
-			return res.status(status).json(response.msg);
+			return res.status(201).json(response.msg);
+		})
+		.catch((err)=>{
+			return res.status(500).json(err.msg);
 		});
 	};
 	projectRouter.prototype.putProject = function(req,res,next){
@@ -46,9 +48,10 @@ const projectRouter = (function(){
 
 		return ctrl.editAction(id,project)
 		.then((response)=>{
-			let status = response.error ? 500 : 200;
-
-			return res.status(status).json(response.msg);
+			return res.status(200).json(response.msg);
+		})
+		.catch((err)=>{
+			return res.status(500).json(err.msg);
 		});
 	};
 	projectRouter.prototype.deleteProject = function(req,res,next){
@@ -57,9 +60,10 @@ const projectRouter = (function(){
 
 		return ctrl.deleteAction(id)
 		.then((response)=>{
-			let status = response.error ? 500 : 200;
-
-			return res.status(status).json(response.msg);
+			return res.status(200).json(response.msg);
+		})
+		.catch((err)=>{
+			return res.status(500).json(err.msg);
 		});
 	};
 

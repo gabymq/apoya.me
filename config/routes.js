@@ -26,7 +26,7 @@ module.exports = {
 	"default" : "/rendered/index",
 
 	/* -------  ROUTES -------- */
-	"api/v1/user": 	"api/v1/user",
-	"api/v1/project": "api/v1/project",
-	"api/v1/image": 	"api/v1/image",
+	"api/v1/user": 	"/api/v1/user",
+	"api/v1/project": "/api/v1/project",
+	"api/v1/image": 	"/api/v1/image",
 };

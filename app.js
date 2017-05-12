@@ -45,9 +45,8 @@ const Application = (function(){
 
 		for(let key in routesConfig ){
 			// find the router en routes dir then load it
-			let routerFilePath = sys.path.join( sys.dir.routes ,  routesConfig[key] );
-			let router = ( sys.fileExists( routerFilePath + '.js') ) ? sys.require( routerFilePath ) : false;
-
+			let routerFilePath = sys.path.join( sys.dir.routes , routesConfig[key] + ".js" );
+			let router = ( sys.fileExists( routerFilePath ) ) ? sys.require( "/routes"+routesConfig[key]+".js" ) : false;
 			// translate key as public style string for route
 			let resKey = '/';
 			resKey += ( key == 'default' ) ? '' : key;
@@ -69,7 +68,7 @@ const Application = (function(){
 		for( let key in loadedRouters ){
 			if( sys.env.env === 'development' ){
 				if( loadedRouters[key].router )
-				console.log('exposing router: "'+loadedRouters[key].path+'" as: "'+key+'"');
+				console.log('exposing router: "'+loadedRouters[key].path+'" \tas: "'+key+'"');
 			}
 
 			if( !loadedRouters[key].router ){
