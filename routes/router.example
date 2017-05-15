@@ -1,5 +1,5 @@
 "use strict";
-// const ControllerModule = sys.require("/pathToControllerModule");
+// const ControllerModule = sys.getController("controllerFilename");
 
 /* NAME Router Class */
 const routerNAME = (function(){

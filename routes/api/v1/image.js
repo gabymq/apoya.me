@@ -1,5 +1,5 @@
 "use strict";
-const imgCtrlr = sys.require("/controllers/image");
+const imgCtrlr = sys.getController("image");
 
 /* Image Router Class */
 const routerImage = (function(){

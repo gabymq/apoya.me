@@ -1,5 +1,5 @@
 "use strict";
-// const Models = sys.require("/models");
+// const Models = sys.getModel("modelFileName");
 
 /* NAME Controller Class */
 const controllerNAME = (function(){
