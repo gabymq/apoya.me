@@ -6,9 +6,9 @@
  * Module dependencies.
  */
 require('../lib/systemTools');
-const app = require('../app');
+const app 	= sys.getBase('app');
 const debug = require('debug')(sys.env.name+':server');
-const http = require('http');
+const http 	= require('http');
 
 /**
  * Get port from environment and store in Express.
@@ -84,6 +84,7 @@ function onError(error) {
  */
 
 function onListening() {
+	const IPs = sys.getProjectUrls();
 	const addr = server.address();
 	const bind = typeof addr === 'string'
 		? 'pipe ' + addr
@@ -92,5 +93,9 @@ function onListening() {
 
 	debug(msg);
 	console.log("\n"+msg);
-	console.log('whatch it in: '+sys.getProjectUrl()+"\n");
+	console.log(' Check it in the these directions: ');
+
+	IPs.forEach((v,k)=>{
+		console.log( v );
+	});
 }

@@ -1,5 +1,5 @@
 "use strict";
-const Models = sys.require("/models");
+const Models = sys.getModel();
 
 /* Project Controller Class */
 const controllerProject = (function(){

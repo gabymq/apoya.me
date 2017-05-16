@@ -1,9 +1,9 @@
 "use strict";
 
-const favicon		= sys.require('serve-favicon');
-const logger		= sys.require('morgan');
-const cookieParser	= sys.require('cookie-parser');
-const bodyParser	= sys.require('body-parser');
+const favicon		= require('serve-favicon');
+const logger		= require('morgan');
+const cookieParser	= require('cookie-parser');
+const bodyParser	= require('body-parser');
 
 // Create and config a new ExpressJs web Application
 const Application = (function(){
@@ -23,7 +23,7 @@ const Application = (function(){
 
 	Application.prototype.middleware = function(){
 		// this.express.use( favicon( sys.path.join( sys.dir.public, 'favicon.ico') ) );
-		this.express.use(logger('dev'));
+		this.express.use( logger('dev') );
 		this.express.use( bodyParser.json() );
 		this.express.use( bodyParser.urlencoded({ extended: true }) );
 		// this.express.use( cookieParser() );
@@ -31,7 +31,7 @@ const Application = (function(){
 
 	Application.prototype.viewsConfig = function(){
 		// view engine setup
-		this.express.set('views', sys.dir.views);
+		this.express.set('views', sys.dir.view );
 		this.express.set('view engine', 'pug');
 	};
 
@@ -40,13 +40,12 @@ const Application = (function(){
 	};
 
 	Application.prototype.getRoutes = function(){
-		const routesConfig = sys.getConfig('/routes');
+		const routesConfig = sys.getConfig('routes');
 		let res = {};
 
 		for(let key in routesConfig ){
 			// find the router en routes dir then load it
-			let routerFilePath = sys.path.join( sys.dir.routes , routesConfig[key] + ".js" );
-			let router = ( sys.fileExists( routerFilePath ) ) ? sys.require( "/routes"+routesConfig[key]+".js" ) : false;
+			let router = sys.getRoute( routesConfig[ key ] )
 			// translate key as public style string for route
 			let resKey = '/';
 			resKey += ( key == 'default' ) ? '' : key;
@@ -55,7 +54,7 @@ const Application = (function(){
 			res[ resKey ] = {
 				name: key,
 				path: routesConfig[key],
-				router: router,
+				router: router || false,
 			};
 		}
 

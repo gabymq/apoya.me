@@ -1,5 +1,5 @@
 "use strict";
-const projCtrlr = sys.require("/controllers/project");
+const projCtrlr = sys.getController("project");
 
 /* Project Router Class */
 const projectRouter = (function(){

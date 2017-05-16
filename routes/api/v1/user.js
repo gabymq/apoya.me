@@ -1,5 +1,5 @@
 "use strict";
-const usrCtrlr = sys.require("/controllers/user");
+const usrCtrlr = sys.getController("user");
 
 /* User Router Class */
 const userRouter = (function(){
