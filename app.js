@@ -43,11 +43,9 @@ const Application = (function(){
 		const routesConfig = sys.getConfig('routes');
 		let res = {};
 
-
 		for(let key in routesConfig ){
 			// find the router en routes dir then load it
-			let routerFilePath = sys.path.join( sys.dir.route , routesConfig[key] + ".js" );
-			let router = ( sys.fileExists( routerFilePath ) ) ? sys.require( "/routes"+routesConfig[key]+".js" ) : false;
+			let router = sys.getRoute( routesConfig[ key ] )
 			// translate key as public style string for route
 			let resKey = '/';
 			resKey += ( key == 'default' ) ? '' : key;
@@ -56,7 +54,7 @@ const Application = (function(){
 			res[ resKey ] = {
 				name: key,
 				path: routesConfig[key],
-				router: router,
+				router: router || false,
 			};
 		}
 
